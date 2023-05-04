@@ -5,11 +5,9 @@ html_text = requests.get('https://calendar.zoznam.sk/school-sksk.php').text
 soup = bs4.BeautifulSoup(html_text, 'lxml')
 
 months = soup.find_all('div', class_='calendar3')
+actual_month = soup.find('div', class_='calendar3 actual')
 
-actual_month = soup.find('div', class_='calendar3 actual').h2.a['href']
-actual_month = int(actual_month.replace("/month-sk0", "").replace(".php", ""))
-
-months_left = months[actual_month:7 ]
+months_left = months[months.index(actual_month):10]
 school_days = []
 
 for month in months_left:
